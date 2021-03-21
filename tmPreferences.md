@@ -1,17 +1,21 @@
-﻿Control miscellaneous behaviours
-File name is not important
-Structure: [[Plist.txt#Sublime Text PList]], example:
-    <?xml version="1.0" encoding="UTF-8"?>
-    <!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-    <plist version="1.0">
+# Контролируйте разное поведение
+
+Название файла не имеет значения. *Далее в сдвоенных квадратных скобках указано что-то вроде ссылок на разделы*
+
+## Для примера структура [[Plist.txt#Sublime Text PList]]:
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
     <dict>
-        <key>name</key>                         //Just a description, ST ignore this
-        <string>Some description</string>
-        <key>scope</key>                        //Comma-separated list of scope names to apply to [[Scope.txt]]
+        <key>name</key>                         //Просто описание. Sublime Text проигнорирует это
+        <string>Некое описание</string>
+        <key>scope</key>                        // Список областей, разделённых запятыми, применимых к [[Scope.txt]]
         <string>text.txt, source.python meta.function.python</string>
-        <key>uuid</key>                        //Each file must have an unique ID
+        <key>uuid</key>                        // Каждый файл должен содержать один уникальный айди
         <string>77AC23B6-8A90-11D9-BAA4-000A9584EC8D</string>
-        <key>settings</key>                    //Required. A container for settings.
+        <key>settings</key>                    // Важно. Контейнер настроек. Эти настройки подробно описываются ниже
         <dict>
             [[#Comment:]]
             [[#cancelCompletion]]
@@ -19,60 +23,68 @@ Structure: [[Plist.txt#Sublime Text PList]], example:
             [[#Indent:]]
         </dict>
     </dict>
-    </plist>
+</plist>
+```
 
-Shell Variables: Affect command toggle_comment line (ctrl+/) and toggle_comment block (ctrl+shift+/)
+## Переменные оболочки [shellVariables]:
+
+Влияют на строку команды `toggle_comment` (ctrl+/) и блок команды `toggle_comment` (ctrl+shift+/)
+```xml
     <key>shellVariables</key>
     <array>
         <dict>
             <key>name</key>
-            <string>TM_COMMENT_START</string>   //Start a comment marker
+            <string>TM_COMMENT_START</string>   // метка начала комментария
             <key>value</key>
-            <string>;</string>                  //String to start a comment
+            <string>;</string>                  // строка комментария
         </dict>
         <dict>
             <key>name</key>
-            <string>TM_COMMENT_END</string>     //[Optional] String to end a comment (match with TM_COMMENT_START to become block comment markers). If omitted, TM_COMMENT_START will be effective until end-of-line (comment line).
+            <string>TM_COMMENT_END</string>     //[Опционально] Строка конца комментария (совпадает с TM_COMMENT_START для установки метки блока комментария). Если опущено, TM_COMMENT_START будет эффективен до конца строки (comment line).
             <key>value</key>
             <string>:_/</string>
         </dict>
 
         <dict>
             <key>name</key>
-            <string>TM_COMMENT_DISABLE_INDENT</string>   //Disables indentation for the TM_COMMENT_START marker.
+            <string>TM_COMMENT_DISABLE_INDENT</string>   //отключает отступ для метки TM_COMMENT_START.
             <key>value</key>
             <string>yes</string>
         </dict>
 
-        Note: To define additional start/end/disable markers, name them [TM_COMMENT_START_2, TM_COMMENT_END_2, TM_COMMENT_DISABLE_INDENT_2];  [TM_COMMENT_START_3, TM_COMMENT_END_3, TM_COMMENT_DISABLE_INDENT_3] ...
+        Заметьте: Чтобы определить дополнительные метки start/end/disable, назовите их [TM_COMMENT_START_2, TM_COMMENT_END_2, TM_COMMENT_DISABLE_INDENT_2];  [TM_COMMENT_START_3, TM_COMMENT_END_3, TM_COMMENT_DISABLE_INDENT_3] ...
     </array>
-
-Completion:
-    <key>cancelCompletion</key>     //If it matches on the current line, supresses the autocomplete popup.
+```
+## Завершение [Completion]:
+```xml
+    <key>cancelCompletion</key>     //Если это совпадает с текущей строкой, подавляется всплывающее окно автозаполнения.
     <string>^(.*\b(and|or)$)|(\s*(pass|return|and|or|(class|def|import)\s*[a-zA-Z_0-9]+)$)</string>
-
-Symbol: [[Sublime Text.txt#Goto Definition]]
-    <key>showInSymbolList</key>             //Whether to show in Goto > Symbol  (1 = true)
+```
+## Указатель [Symbol]: [[Sublime Text.txt#Goto Definition]]
+```xml
+    <key>showInSymbolList</key>             //Покажется ли в Goto > Symbol  (1 = true)
     <integer>1</integer>
-    <key>showInIndexedSymbolList</key>      //Links symbols to the global symbol list.
+    <key>showInIndexedSymbolList</key>      //Ссылки на символы в глобальном списке символов.
     <string>1</string>
-    <key>symbolTransformation</key>         //Semicolon-separated Oniguruma Regex to search-and-replace texts => customize before display in menu Goto > Symbol
+    <key>symbolTransformation</key>         //Разделённая точкой с запятой регулярка для поиска и замены текстов => настраиваются перед отображением в меню Goto > Symbol
     <string>
-        s/\(/:  /g;                         //Search left parenthesis and replace it with a colon plus 2 spaces. /g means match all occurences
-        s/,.*//g;                           //Search comma followed by any character and replace it with nothing.
-        s/class\s+([A-Za-z_][A-Za-z0-9_]*.+?\)?)(\:|$)/$1/g;   //a captured symbol such as  class FooBar(object)  would show up as FooBar(object) in the symbol list.
+        s/\(/:  /g;                         //Поиск левой скобки и замена её двоеточием с двумя пробелами. /g означает соответствие всем вхождениям
+        s/,.*//g;                           //Найдите запятую, за которой следует любой символ и замените на ничего.
+        s/class\s+([A-Za-z_][A-Za-z0-9_]*.+?\)?)(\:|$)/$1/g;   //захваченный символ, такой как класс FooBar (объект), будет отображаться как FooBar (объект) в списке символов .
     </string>
     <key>symbolIndexTransformation</key>
-    <string>/.*/\L$1/;</string>             //Convert to lowercase (so that Goto Definition can work case-insensitively)
-
-Indent:
-    <key>decreaseIndentPattern</key>                        //If matches in current line, next lines will be indented one level further
+    <string>/.*/\L$1/;</string>             //преобразуем к нижнему регистру (так что определение Goto может работать нечувствительно к регистру)
+```
+## Отступ [Indent]:
+```xml
+    <key>decreaseIndentPattern</key>                        // Если совпадает с текущей строкой, следующие строки будут на отступ дальше
     <string>^\s*(elif|else|except|finally)\b.*:</string>
-    <key>increaseIndentPattern</key>                        //If matches in current line, next lines will be unindented one level
+    <key>increaseIndentPattern</key>                        //Если совпадает в текущей строке, следующие строки будут удалены на один уровень
     <string>^\s*(class|def|elif|else|except|finally|for|if|try|with|while)\b.*:\s*$</string>
-    <key>bracketIndentNextLinePattern</key>                 //If matches in current line, only the next line will be indented one level further.
-    <string>insert regex here</string>
-    <key>disableIndentNextLinePattern</key>                 //If it matches on the current line, the next line will not be indented further.
+    <key>bracketIndentNextLinePattern</key>                 //Если совпадает в текущей строке, следующая строка будет иметь на один отступ больше
+    <string>Вставьте сюда регэксп</string>
+    <key>disableIndentNextLinePattern</key>                 //If it matches on the current line, the next line will not be indented further. Если найдено в текущей строке, следующая строка не будет иметь большего отступа
     <string>1</string>
-    <key>unIndentedLinePattern</key>                        //The auto-indenter will ignore lines matching this regex when computing the next line’s indentation level.
-    <string>insert regex here</string>
+    <key>unIndentedLinePattern</key>                        // Автоотступ будет игнорировать строки, соответствующие данной регулярке, когда будет вычислять отступ.
+    <string>Вставьте сюда регэксп</string>
+```
