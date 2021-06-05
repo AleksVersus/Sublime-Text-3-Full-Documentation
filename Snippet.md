@@ -11,8 +11,8 @@
 Каждый `*.sublime-snippet` может содержать только один сниппет. Для размещения нескольких, используйте [AutoComplete.txt#.sublime-completions]
 
 Используя Заданные Сочетания Клавши, Мы можем
-     * загрузить определённый сниппет, например: `{ "keys": ["%"], "command": "insert_snippet", "args": {"name": "Packages/XML/long-tag.sublime-snippet"} }`
-     * вставить сниппет без создания файла .sublime-snippet, например: `{ "keys": ["%"], "command": "insert_snippet", "args": {"contents": "%$0%"} }`
+ * загрузить определённый сниппет, например: `{ "keys": ["%"], "command": "insert_snippet", "args": {"name": "Packages/XML/long-tag.sublime-snippet"} }`
+ * вставить сниппет без создания файла .sublime-snippet, например: `{ "keys": ["%"], "command": "insert_snippet", "args": {"contents": "%$0%"} }`
     
 Пример файла `.sublime-snippet` :
 
