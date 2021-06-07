@@ -77,9 +77,9 @@
 ```
 ## Отступ [Indent]:
 ```xml
-    <key>decreaseIndentPattern</key>                        // Если совпадает с текущей строкой, следующие строки будут на отступ дальше
+    <key>decreaseIndentPattern</key>                        // Если совпадает с текущим шаблоном, строка вернётся на отступ обратно
     <string>^\s*(elif|else|except|finally)\b.*:</string>
-    <key>increaseIndentPattern</key>                        //Если совпадает в текущей строке, следующие строки будут удалены на один уровень
+    <key>increaseIndentPattern</key>                        //Если совпадает с текущим шаблоном, следующие строки будут удалены на один уровень
     <string>^\s*(class|def|elif|else|except|finally|for|if|try|with|while)\b.*:\s*$</string>
     <key>bracketIndentNextLinePattern</key>                 //Если совпадает в текущей строке, следующая строка будет иметь на один отступ больше
     <string>Вставьте сюда регэксп</string>
